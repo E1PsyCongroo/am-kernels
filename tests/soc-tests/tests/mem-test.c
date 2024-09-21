@@ -98,7 +98,7 @@ void psram_test(void) {
 
 void sdram_test(void) {
   void* sdram_start = (void*)0xA0000000;
-  void* sdram_end   = (void*)0xA4000000;
+  void* sdram_end   = (void*)0xA8000000;
   uint8_t *p1 = sdram_start;
   while (p1 != sdram_end) {
     *p1 = (uintptr_t)p1 & 0xff;
