@@ -11,6 +11,7 @@ void unlock() {
 }
 
 void streamlight_helper() {
+  for (volatile int i = 0; i < 500; i++);
   uint16_t led = inw(GPIO_LED);
   outw(GPIO_LED, (led << 1) | ((led & 0x8000) >> 15));
 }
