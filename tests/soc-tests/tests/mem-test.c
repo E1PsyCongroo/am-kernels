@@ -144,9 +144,55 @@ void sdram_test(void) {
   }
 }
 
+void chip_link_mem_test(void) {
+  void* chip_link_mem_start = (void*)0xc0000000;
+  void* chip_link_mem_end   = (void*)0xc0001000;
+  uint8_t *p1 = chip_link_mem_start;
+  while (p1 != chip_link_mem_end) {
+    *p1 = (uintptr_t)p1 & 0xff;
+    p1++;
+  }
+  p1 = chip_link_mem_start;
+  while (p1 != chip_link_mem_end) {
+    check(*p1 == ((uintptr_t)p1 & 0xff));
+    p1++;
+  }
+
+  uint16_t *p2 = chip_link_mem_start;
+  while (p2 != chip_link_mem_end) {
+    *p2 = (uintptr_t)p2 & 0xffff;
+    p2++;
+  }
+  p2 = chip_link_mem_start;
+  while (p2 != chip_link_mem_end) {
+    check(*p2 == ((uintptr_t)p2 & 0xffff));
+    p2++;
+  }
+
+  uint32_t *p3 = chip_link_mem_start;
+  while (p3 != chip_link_mem_end) {
+    *p3 = (uintptr_t)p3 & 0xffffffff;
+    p3++;
+  }
+  p3 = chip_link_mem_start;
+  while (p3 != chip_link_mem_end) {
+    check(*p3 == ((uintptr_t)p3 & 0xffffffff));
+    p3++;
+  }
+
+  uint64_t *p4 = chip_link_mem_start;
+  while (p4 != chip_link_mem_end) {
+    *p4 = (uint64_t)(uintptr_t)p3 & 0xffffffffffffffff;
+    p4++;
+  }
+  p4 = chip_link_mem_start;
+  while (p4 != chip_link_mem_end) {
+    check(*p4 == ((uint64_t)(uintptr_t)p3 & 0xffffffffffffffff));
+    p4++;
+  }
+}
+
 int main() {
-  // sram_test();
-  // psram_test();
-  sdram_test();
+  chip_link_mem_test();
   return 0;
 }
